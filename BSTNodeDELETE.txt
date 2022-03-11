@@ -1,0 +1,31 @@
+public static BSTNode delete(int value, BSTNode current)
+{
+	if(current == null)
+		return current;		
+	if(value < current.value)
+	    current.leftChild = delete(value, current.leftChild);
+	else if(value > current.value)
+		current.rightChild = delete(value, current.rightChild);
+	else if(value == current.value)
+	{
+		if(current.leftChild != null && current.rightChild != null)
+		{
+			int min = current.rightChild.value;
+			BSTNode temp = current.rightChild;
+			while(temp.leftChild != null)
+			{
+				min = temp.leftChild.value;
+				temp = temp.leftChild;
+			}
+			current.value = min;
+			current.rightChild = delete(min, current.rightChild);
+		}			
+		else if(current.leftChild == null)
+			return current.rightChild;
+		else if(current.rightChild == null)
+			return current.leftChild;			
+		else
+			return null;
+	}
+	return current;
+}
